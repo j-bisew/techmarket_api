@@ -3,6 +3,9 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const productRoutes = require("./src/routes/productRoutes");
+const categoryRoutes = require("./src/routes/categoryRoutes");
+const userRoutes = require("./src/routes/userRoutes");
+const reviewRoutes = require("./src/routes/reviewRoutes");
 const errorHandler = require("./src/middleware/errorMiddleware");
 const notFound = require("./src/middleware/notFoundMiddleware");
 const db = require("./src/config/db");
@@ -17,11 +20,13 @@ app.use(morgan("dev"));
 
 db.initDbFromSql();
 
-
 app.use("/api/products", productRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to the Products API" });
+  res.json({ message: "Welcome to the TechMarket API" });
 });
 
 app.use(notFound);
@@ -30,5 +35,3 @@ app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-module.exports = app;
